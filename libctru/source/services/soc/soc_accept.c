@@ -25,15 +25,8 @@ int accept(int sockfd, struct sockaddr *addr, socklen_t *addrlen)
 		return -1;
 	}
 
-	fd = __alloc_handle(sizeof(__handle) + sizeof(Handle));
-	if(fd < 0) {
-		errno = ENOMEM;
-		return -1;
-	}
-
-	handle = __get_handle(fd);
-	handle->device = dev;
-	handle->fileStruct = ((void *)handle) + sizeof(__handle);
+	fd = __alloc_handle(dev);
+	if(fd < 0) return fd;
 
 	memset(tmpaddr, 0, 0x1c);
 
